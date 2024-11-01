@@ -1,38 +1,9 @@
-FROM ghcr.io/hassio-addons/debian-base:3.1.0
+FROM jmehan/docker-cups-airprint:latest
 
 LABEL io.hass.version="1.0" io.hass.type="addon" io.hass.arch="aarch64|amd64"
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        sudo \
-        locales \
-        cups \
-        cups-filters \
-        avahi-daemon \
-        libnss-mdns \
-        dbus \
-        colord \
-        printer-driver-all \
-        printer-driver-cups-pdf \
-        printer-driver-gutenprint \
-        openprinting-ppds \
-        hpijs-ppds \
-        hp-ppd  \
-        hplip \
-        printer-driver-foo2zjs \
-        cups-pdf \
-        gnupg2 \
-        lsb-release \
-        nano \
-        samba \
-        bash-completion \
-        procps \
-        whois \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
 
 COPY rootfs /
 
@@ -45,6 +16,9 @@ RUN useradd \
   --password=$(mkpasswd print) \
   print \
 && sed -i '/%sudo[[:space:]]/ s/ALL[[:space:]]*$/NOPASSWD:ALL/' /etc/sudoers
+
+ENV CUPSADMIN="print"
+ENV CUPSPASSWORD="print"
 
 EXPOSE 631
 
