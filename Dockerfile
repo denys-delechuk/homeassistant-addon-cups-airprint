@@ -10,11 +10,13 @@ RUN apt-get update \
         sudo \
         locales \
         cups \
+        cups-filters \
         avahi-daemon \
         libnss-mdns \
         dbus \
         colord \
         printer-driver-all \
+        printer-driver-cups-pdf \
         printer-driver-gutenprint \
         openprinting-ppds \
         hpijs-ppds \
